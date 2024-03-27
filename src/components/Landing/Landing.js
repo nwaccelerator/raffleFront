@@ -23,6 +23,7 @@ const Landing = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (!form.name || !form.secret_token) return;
     const response = await createRaffle(form);
     if (response.error) {
       setError(true);
