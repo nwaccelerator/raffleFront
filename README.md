@@ -4,4 +4,4 @@ touch .env
 
 Environment variables
 
-- `NODE_URL` = http://localhost:30001
+- `REACT_APP_NODE_URL` = http://localhost:3001
