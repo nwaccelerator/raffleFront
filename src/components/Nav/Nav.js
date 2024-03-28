@@ -1,9 +1,10 @@
+import { useNavigate } from "react-router-dom";
 export const Nav = () => {
+  const navigate = useNavigate();
   return (
     <>
       <header className="container text-center">
-        <h1>Raffle App</h1>
-        <h2 id="raffle-state"></h2>
+        <h1 onClick={() => navigate("/")}>Raffle App</h1>
       </header>
     </>
   );

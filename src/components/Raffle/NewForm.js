@@ -1,25 +1,29 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { addNewParticipant } from "../../api/api";
+import { formShape } from "../../helper/helper";
+import { useParams } from "react-router-dom";
 
-const NewForm = ({ id }) => {
-  const [form, setForm] = useState({
-    first_name: "",
-    last_name: "",
-    email: "",
-    phone: "",
-  });
+const NewForm = () => {
+  const [form, setForm] = useState(formShape);
 
   const [error, setError] = useState(false);
   const [success, setSuccess] = useState(false);
+  const { id } = useParams();
+
+  useEffect(() => {
+    setError(false);
+  }, [form.first_name, form.last_name, form.email, form.phone]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!form.first_name || !form.last_name || !form.email) return;
     const response = await addNewParticipant(form, id);
-    if (response.error) {
-      setError(true);
+    if (!response.ok) {
+      const mssg = await response.json();
+      setError(mssg.error);
       setSuccess(false);
     } else {
+      setError(false);
       setSuccess(true);
     }
   };
@@ -97,6 +101,14 @@ const NewForm = ({ id }) => {
               >
                 Submit
               </button>
+              <button
+                type="click"
+                id="formreset"
+                className="btn btn-secondary mb-2 me-2"
+                onClick={() => setForm(formShape)}
+              >
+                Reset
+              </button>
             </div>
           </form>
         </>
@@ -110,7 +122,7 @@ const NewForm = ({ id }) => {
       )}
       {error && (
         <div className="alert alert-danger" role="alert">
-          Api Error
+          {error}
         </div>
       )}
     </>
