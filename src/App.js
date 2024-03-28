@@ -2,7 +2,7 @@ import { Routes, Route } from "react-router-dom";
 import Nav from "./components/Nav/Nav";
 import Landing from "./components/Landing/Landing";
 import Raffle from "./components/Raffle/Raffle";
-import "./App.css";
+import NotFound from "./components/NotFound/NotFound";
 
 function App() {
   return (
@@ -23,6 +23,7 @@ function App() {
             path="/raffles/:id/winner"
             element={<Raffle part={null} winner={true} />}
           />
+          <Route path="/*" element={<NotFound />} />
         </Routes>
       </main>
     </div>

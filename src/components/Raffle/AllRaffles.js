@@ -1,7 +1,6 @@
-import { useState } from "react";
 import { FaCalendarCheck } from "react-icons/fa";
 import { FaTrophy } from "react-icons/fa";
-import { useNavigate, useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const AllRaffles = ({ allraffles }) => {
   const navigate = useNavigate();
