@@ -12,7 +12,10 @@ const Landing = () => {
   useEffect(() => {
     async function getData() {
       const response = await getAllRaffles();
-      if (response.ok) setAllRaffles(await response.json());
+      if (response.ok) {
+        const data = await response.json();
+        setAllRaffles(data.data);
+      }
     }
     getData();
   }, []);
@@ -32,7 +35,7 @@ const Landing = () => {
       const newItem = await response.json();
       setError(false);
       setSuccess(true);
-      setAllRaffles([...allraffles, newItem[0]]);
+      setAllRaffles([...allraffles, newItem.data[0]]);
     }
   };
 

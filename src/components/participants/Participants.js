@@ -16,7 +16,8 @@ const Participants = () => {
         setError(true);
       } else {
         setError(false);
-        setData(await response.json());
+        const data = await response.json();
+        setData(data.data);
       }
     }
     getData();
@@ -26,9 +27,10 @@ const Participants = () => {
     <>
       {data.length ? (
         <>
+          <h3>{data.length} Participants</h3>
           {data.map((item, idx) => {
             return (
-              <div className="card" key={idx} style={{ width: "18rem" }}>
+              <div className="card my-1" key={idx} style={{ width: "18rem" }}>
                 <div className="card-body">
                   <h5 className="card-title">
                     {item.first_name} {item.last_name}

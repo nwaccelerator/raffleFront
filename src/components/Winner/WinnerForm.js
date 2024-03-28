@@ -13,7 +13,8 @@ const WinnerForm = ({ getData }) => {
     const response = await drawRaffle(form, id);
     if (!response?.ok) {
       if (response.status === 400) {
-        setError("No contestants in raffle");
+        const data = await response.json();
+        setError(data.error);
       } else if (response.status === 404) {
         setError("Invalid token try again");
       } else {

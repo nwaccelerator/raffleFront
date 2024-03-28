@@ -3,6 +3,7 @@ import { getRafWinner } from "../../api/api";
 import { useParams } from "react-router-dom";
 import { FaEnvelope, FaPhone } from "react-icons/fa";
 import WinnerForm from "./WinnerForm";
+import { ballons } from "../../assets";
 
 const Winner = () => {
   const [winner, setWinner] = useState(null);
@@ -10,7 +11,10 @@ const Winner = () => {
 
   async function getData() {
     const response = await getRafWinner(id);
-    if (response.ok) setWinner(await response.json());
+    if (response.ok) {
+      const data = await response.json();
+      setWinner(data.data);
+    }
   }
 
   useEffect(() => {
@@ -23,11 +27,12 @@ const Winner = () => {
         <div>
           <h1>Winner</h1>
           <div className="card" style={{ width: "18rem" }}>
+            <img src={ballons} alt="celebration" />
             <div className="card-body">
               <h5 className="card-title">
                 {winner.first_name} {winner.last_name}
               </h5>
-              <p className="card-text">raffle Id# {winner.winner_id}</p>
+              <p className="card-text">raffle Id# {winner.id}</p>
               <p className="card-text">
                 <FaEnvelope /> {winner.email}
               </p>

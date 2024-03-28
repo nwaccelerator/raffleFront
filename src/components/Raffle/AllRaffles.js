@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { FaCalendarCheck } from "react-icons/fa";
 import { FaTrophy } from "react-icons/fa";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useHistory } from "react-router-dom";
 
 const AllRaffles = ({ allraffles }) => {
   const navigate = useNavigate();
@@ -13,10 +13,16 @@ const AllRaffles = ({ allraffles }) => {
           {allraffles.map((item, idx) => {
             return (
               <div
-                className="card"
+                className="card my-1"
                 key={idx}
                 style={{ width: "18rem" }}
-                onClick={() => navigate(`/raffles/${item.id}`)}
+                onClick={() => {
+                  navigate(`/raffles/${item.id}`, {
+                    state: {
+                      raffleName: item.name,
+                    },
+                  });
+                }}
               >
                 <div className="card-body">
                   <h5 className="card-title">{item.name}'s Raffle</h5>

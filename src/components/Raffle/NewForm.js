@@ -5,7 +5,6 @@ import { useParams } from "react-router-dom";
 
 const NewForm = () => {
   const [form, setForm] = useState(formShape);
-
   const [error, setError] = useState(false);
   const [success, setSuccess] = useState(false);
   const { id } = useParams();
@@ -18,9 +17,8 @@ const NewForm = () => {
     e.preventDefault();
     if (!form.first_name || !form.last_name || !form.email) return;
     const response = await addNewParticipant(form, id);
-    if (!response.ok) {
-      const mssg = await response.json();
-      setError(mssg.error);
+    if (!response?.ok) {
+      setError("This raffle is not accepting new entrants.");
       setSuccess(false);
     } else {
       setError(false);
@@ -31,6 +29,7 @@ const NewForm = () => {
   const handleInputChange = (n, v) => {
     setForm({ ...form, [n]: v });
   };
+
   return (
     <>
       {id ? (
@@ -70,10 +69,9 @@ const NewForm = () => {
                 Email*
               </label>
               <input
-                type="text"
+                type="email"
                 className="form-control shadow-sm"
                 id="email"
-                pattern=".{4,100}"
                 onChange={(e) => handleInputChange("email", e.target.value)}
                 value={form.email}
                 placeholder="johndoe@example.com"
@@ -84,13 +82,13 @@ const NewForm = () => {
                 Phone
               </label>
               <input
-                type="text"
+                type="tel"
                 className="form-control shadow-sm"
                 id="phone"
-                pattern=".{6,10}"
+                pattern="[0-9]{1}-[0-9]{3}-[0-9]{3}-[0-9]{4}"
                 onChange={(e) => handleInputChange("phone", e.target.value)}
                 value={form.phone}
-                placeholder="12345678"
+                placeholder="1-234-456-8979"
               />
             </div>
             <div className="d-flex">
@@ -117,7 +115,7 @@ const NewForm = () => {
       )}
       {success && (
         <div className="alert alert-primary" role="alert">
-          Successfully added to raffle.
+          Successfully added {form.first_name + " " || ""}to raffle.
         </div>
       )}
       {error && (
