@@ -12,7 +12,10 @@ const Landing = () => {
   useEffect(() => {
     async function getData() {
       const response = await getAllRaffles();
-      if (response?.length) setAllRaffles(response);
+      if (response.ok) {
+        const data = await response.json();
+        setAllRaffles(data.data);
+      }
     }
     getData();
   }, []);
@@ -23,13 +26,16 @@ const Landing = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (!form.name || !form.secret_token) return;
     const response = await createRaffle(form);
-    if (response.error) {
+    if (!response.ok) {
       setError(true);
       setSuccess(false);
     } else {
+      const newItem = await response.json();
+      setError(false);
       setSuccess(true);
-      setAllRaffles([...allraffles, response[0]]);
+      setAllRaffles([...allraffles, newItem.data[0]]);
     }
   };
 
