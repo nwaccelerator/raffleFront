@@ -12,7 +12,7 @@ const Landing = () => {
   useEffect(() => {
     async function getData() {
       const response = await getAllRaffles();
-      if (response.ok) {
+      if (response?.ok) {
         const data = await response.json();
         setAllRaffles(data.data);
       }

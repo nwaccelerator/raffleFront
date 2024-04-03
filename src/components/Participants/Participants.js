@@ -12,8 +12,13 @@ const Participants = () => {
   useEffect(() => {
     async function getData() {
       const response = await getPartById(id);
-      if (!response.ok) {
-        setError(true);
+      if (!response?.ok) {
+        const data = await response.json();
+        if (response.status === 400 || response.status === 404) {
+          setError(data.error);
+        } else {
+          setError("Api Error");
+        }
       } else {
         setError(false);
         const data = await response.json();
@@ -25,7 +30,7 @@ const Participants = () => {
 
   return (
     <>
-      {data.length ? (
+      {data.length > 0 ? (
         <>
           <h3>{data.length} Participants</h3>
           {data.map((item, idx) => {
@@ -49,8 +54,8 @@ const Participants = () => {
         </>
       ) : null}
       {error && (
-        <div className="alert alert-danger" role="alert">
-          No participants for raffle id {id}
+        <div className="alert alert-danger my-1" role="alert">
+          {error}
         </div>
       )}
     </>

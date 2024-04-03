@@ -9,16 +9,17 @@ const NewForm = () => {
   const [success, setSuccess] = useState(false);
   const { id } = useParams();
 
-  useEffect(() => {
-    setError(false);
-  }, [form.first_name, form.last_name, form.email, form.phone]);
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!form.first_name || !form.last_name || !form.email) return;
     const response = await addNewParticipant(form, id);
     if (!response?.ok) {
-      setError("This raffle is not accepting new entrants.");
+      const data = await response.json();
+      if (response.status === 400 || response.status === 404) {
+        setError(data.error);
+      } else {
+        setError("Api Error");
+      }
       setSuccess(false);
     } else {
       setError(false);
