@@ -2,7 +2,7 @@ const NODE_URL = process.env.REACT_APP_NODE_URL;
 
 export async function createRaffle(args) {
   try {
-    const response = await fetch(`${NODE_URL}/raffles`, {
+    const response = await fetch(`${NODE_URL}/api/raffles`, {
       method: "POST",
       mode: "cors",
       headers: {
@@ -18,7 +18,7 @@ export async function createRaffle(args) {
 
 export async function getAllRaffles() {
   try {
-    const response = await fetch(`${NODE_URL}/raffles`, {
+    const response = await fetch(`${NODE_URL}/api/raffles`, {
       method: "GET",
       mode: "cors",
     });
@@ -30,7 +30,7 @@ export async function getAllRaffles() {
 
 export async function getPartById(id) {
   try {
-    const response = await fetch(`${NODE_URL}/raffles/${id}/participants`, {
+    const response = await fetch(`${NODE_URL}/api/raffles/${id}/participants`, {
       method: "GET",
       mode: "cors",
     });
@@ -42,7 +42,7 @@ export async function getPartById(id) {
 
 export async function getRafflePart(id) {
   try {
-    const response = await fetch(`${NODE_URL}/raffles/${id}/participants`, {
+    const response = await fetch(`${NODE_URL}/api/raffles/${id}/participants`, {
       method: "GET",
       mode: "cors",
     });
@@ -54,7 +54,7 @@ export async function getRafflePart(id) {
 
 export async function getRafWinner(id) {
   try {
-    const response = await fetch(`${NODE_URL}/raffles/${id}/winner`, {
+    const response = await fetch(`${NODE_URL}/api/raffles/${id}/winner`, {
       method: "GET",
       mode: "cors",
     });
@@ -67,7 +67,7 @@ export async function getRafWinner(id) {
 export async function addNewParticipant(args, id) {
   if (args.phone === "") delete args["phone"];
   try {
-    const response = await fetch(`${NODE_URL}/raffles/${id}/participants`, {
+    const response = await fetch(`${NODE_URL}/api/raffles/${id}/participants`, {
       method: "POST",
       mode: "cors",
       headers: {
@@ -83,7 +83,7 @@ export async function addNewParticipant(args, id) {
 
 export async function drawRaffle(secret_token, id) {
   try {
-    const response = await fetch(`${NODE_URL}/raffles/${id}/winner`, {
+    const response = await fetch(`${NODE_URL}/api/raffles/${id}/winner`, {
       method: "PUT",
       mode: "cors",
       headers: {

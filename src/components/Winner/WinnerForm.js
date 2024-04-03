@@ -15,7 +15,7 @@ const WinnerForm = ({ getData }) => {
       if (response.status === 400) {
         const data = await response.json();
         setError(data.error);
-      } else if (response.status === 404) {
+      } else if (response.status === 403) {
         setError("Invalid token try again");
       } else {
         setError("Api Error");
